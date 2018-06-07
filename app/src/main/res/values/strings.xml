@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AndroidProjectStructure</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="please_enter_valid_email">Please enter valid email.</string>
+    <string name="please_enter_password">Please enter password.</string>
+    <string name="please_enter_minimum_password">Please enter minimum five characters.</string>
+    <string name="retry">Retry</string>
+</resources>
