@@ -4,8 +4,8 @@
  **/
 def versions = [:]
 
-versions.android_gradle_plugin = "3.2.0-alpha16"
-versions.kotlin_gradle_plugin = "1.2.41"
+versions.android_gradle_plugin = "3.2.0-beta02"
+versions.kotlin_gradle_plugin = "1.2.50"
 
 versions.support = "27.1.1"
 versions.constraint_layout = "1.1.0"

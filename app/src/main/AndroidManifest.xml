@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.app.kotlin_android_architecture_components.baseclass.BaseApp"
+        android:name="com.app.rahul.baseclass.BaseApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,8 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity" />
-        <activity android:name="com.app.kotlin_android_architecture_components.view.LoginActivity" />
-        <activity android:name="com.app.kotlin_android_architecture_components.view.AboutActivity"/>
+        <activity android:name="com.app.rahul.view.LoginActivity" />
+        <activity android:name="com.app.rahul.view.AboutActivity" />
     </application>
 
 </manifest>
