@@ -9,5 +9,5 @@ In this project use MVVM structure and also use new android architecture compone
   - use LiveData for observer data in Activity
   - Manage Shared Preferences
   - convert AndroidX
-  - build.gradle file add Rename apk file 
+  - build.gradle file add rename apk file function.
 
