@@ -1,13 +1,13 @@
-package app.rahul.com.kotlinandroidarchitecturecomponent.view
+package com.app.rahul.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import app.rahul.com.kotlinandroidarchitecturecomponent.R
-import com.app.rahul.utility.GlobalKeys
+import com.app.rahul.utility.KEY_USER_ID
+import com.app.rahul.utility.KEY_X_API
 import com.app.rahul.utility.SharedPrefsManager
-import com.app.rahul.utility.UtilConstants
-import com.app.rahul.view.LoginActivity
+import com.app.rahul.utility.X_API_KEY
 
 class SplashActivity : com.app.rahul.baseclass.BaseActivity() {
     private var myHandler: Handler? = null
@@ -23,12 +23,12 @@ class SplashActivity : com.app.rahul.baseclass.BaseActivity() {
     }
 
     override fun loadData() {
-        if (!SharedPrefsManager.containsKey(GlobalKeys.KEY_X_API)) {
-            SharedPrefsManager.setString(GlobalKeys.KEY_X_API, UtilConstants.X_API_KEY)
+        if (!SharedPrefsManager.containsKey(KEY_X_API)) {
+            SharedPrefsManager.setString(KEY_X_API, X_API_KEY)
         }
 
         myRunnable = Runnable {
-            if (SharedPrefsManager.containsKey(GlobalKeys.KEY_USER_ID)) {
+            if (SharedPrefsManager.containsKey(KEY_USER_ID)) {
                 startHomeActivity()
             } else {
                 startLoginActivity()

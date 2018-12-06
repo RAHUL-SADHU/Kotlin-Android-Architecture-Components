@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".view.SplashActivity"
+            android:name="com.app.rahul.view.SplashActivity"
             android:noHistory="true"
             android:theme="@style/FullScreen">
             <intent-filter>
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity" />
+        <activity android:name="com.app.rahul.view.MainActivity" />
         <activity android:name="com.app.rahul.view.LoginActivity" />
         <activity android:name="com.app.rahul.view.AboutActivity" />
     </application>

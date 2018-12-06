@@ -1,6 +1,6 @@
 package com.app.rahul.model
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

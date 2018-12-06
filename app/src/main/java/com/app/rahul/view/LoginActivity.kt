@@ -1,15 +1,14 @@
 package com.app.rahul.view
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
 import app.rahul.com.kotlinandroidarchitecturecomponent.R
 import app.rahul.com.kotlinandroidarchitecturecomponent.databinding.ActivityLoginBinding
-import app.rahul.com.kotlinandroidarchitecturecomponent.view.MainActivity
-import app.rahul.com.kotlinandroidarchitecturecomponent.viewmodel.LoginVM
 import com.app.rahul.utility.Utils
+import com.app.rahul.viewmodel.LoginVM
 
 /**
  * Created by Rahul Sadhu on 6/6/18.
@@ -17,7 +16,7 @@ import com.app.rahul.utility.Utils
 
 class LoginActivity : com.app.rahul.baseclass.BaseActivity() {
     private lateinit var mBinding :ActivityLoginBinding
-    private lateinit var loginVM:LoginVM
+    private lateinit var loginVM: LoginVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

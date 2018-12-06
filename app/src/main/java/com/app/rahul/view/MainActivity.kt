@@ -1,7 +1,7 @@
-package app.rahul.com.kotlinandroidarchitecturecomponent.view
+package com.app.rahul.view
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import app.rahul.com.kotlinandroidarchitecturecomponent.R
 
 /**

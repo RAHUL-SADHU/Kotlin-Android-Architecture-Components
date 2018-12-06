@@ -1,17 +1,19 @@
 package com.app.rahul.baseclass
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import com.app.rahul.model.ResponseData
 import com.app.rahul.retrofit.NetworkManager
+import com.app.rahul.utility.FAILURE
 
 /**
- * Created by Rahul Sadhu on 21/5/18.
+ * Created by Rahul Sadhu.
  */
 open class BaseViewModel : ViewModel() {
 
-    lateinit var responseDataObserver: Observer<com.app.rahul.model.ResponseData<*>>
+    lateinit var responseDataObserver: Observer<ResponseData<*>>
     private var isLoading = MutableLiveData<Boolean>()
     private val networkManager: NetworkManager = NetworkManager()
 
@@ -23,19 +25,24 @@ open class BaseViewModel : ViewModel() {
         get() = isLoading
 
 
-    internal val apiResponse: LiveData<com.app.rahul.model.ResponseData<*>>
+    internal val apiResponse: LiveData<ResponseData<*>>
         get() = this.networkManager.apiResponse
 
 
-    internal val apiError: com.app.rahul.baseclass.SingleLiveData<String>
+    internal val apiError: LiveData<String>
         get() = this.networkManager.apiError
 
-    protected fun getNetworkManager(): NetworkManager = networkManager
+    fun getNetworkManager(): NetworkManager = networkManager
 
 
     private fun setObservable() {
         // removeObserve() in BaseActivity
-        responseDataObserver = Observer { responseData -> responseData(responseData) }
+        responseDataObserver = Observer { responseData ->
+            if (responseData.status != FAILURE) {
+                apiResponse(responseData)
+            }
+
+        }
         apiResponse.observeForever(responseDataObserver)
     }
 
@@ -43,8 +50,7 @@ open class BaseViewModel : ViewModel() {
         isLoading.postValue(loading)
     }
 
-    open fun responseData(responseData: com.app.rahul.model.ResponseData<*>?) {
+    open fun apiResponse(responseData: ResponseData<*>) {
         setLoading(false)
     }
-
 }

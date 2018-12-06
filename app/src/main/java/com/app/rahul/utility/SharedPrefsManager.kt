@@ -2,7 +2,6 @@ package com.app.rahul.utility
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.app.rahul.model.UserModel
 
 /**
  * Created by Rahul Sadhu
@@ -10,7 +9,7 @@ import com.app.rahul.model.UserModel
 
 object SharedPrefsManager {
 
-    private val PREF_NAME = SharedPreferences::class.java.`package`.name
+    private val PREF_NAME = SharedPreferences::class.java.`package`?.name
     lateinit var prefs: SharedPreferences
 
 
@@ -41,12 +40,12 @@ object SharedPrefsManager {
     }
 
     fun getString(key: String): String {
-        return prefs.getString(key, "")
+        return prefs.getString(key, "") ?: ""
     }
 
     fun setUserModel(userModel: com.app.rahul.model.UserModel) {
-        setString(GlobalKeys.KEY_USER_ID, userModel.userid)
-        setString(GlobalKeys.KEY_ACCESS_TOKEN, userModel.accesstoken)
+        setString(KEY_USER_ID, userModel.userid)
+        setString(KEY_ACCESS_TOKEN, userModel.accesstoken)
     }
 
     }

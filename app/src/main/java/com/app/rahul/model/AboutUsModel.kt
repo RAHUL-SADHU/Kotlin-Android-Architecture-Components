@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class AboutUsModel (
-    @SerializedName("title")
+        @SerializedName("title")
     @Expose
-    var title: String? = null,
-    @SerializedName("content")
+        var title: String?,
+        @SerializedName("content")
     @Expose
-    var content: String? = null
+        var content: String?
 )

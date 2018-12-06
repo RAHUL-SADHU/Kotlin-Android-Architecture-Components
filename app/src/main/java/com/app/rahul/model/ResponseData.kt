@@ -8,14 +8,14 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseData<T>(
 
-    @SerializedName("MESSAGE")
-    var message: String? = null,
-    @SerializedName("SUCCESS")
+        @SerializedName("MESSAGE")
+        var message: String?,
+        @SerializedName("SUCCESS")
     var success: Int = 0,
-    @SerializedName("DATA")
-    var data: T? = null,
-    @SerializedName("STATUS")
-    var status: String? = null,
-    var key: String? = null
+        @SerializedName("DATA")
+        var data: T?,
+        @SerializedName("STATUS")
+        var status: Int,
+        var key: String?
 
 )

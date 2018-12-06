@@ -1,8 +1,11 @@
 package com.app.rahul.viewmodel
 
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.app.rahul.baseclass.BaseViewModel
+import com.app.rahul.model.AboutUsModel
+import com.app.rahul.model.ResponseData
 import com.app.rahul.retrofit.ABOUT_US_URL
 import com.app.rahul.retrofit.RetrofitClient
 
@@ -10,22 +13,23 @@ import com.app.rahul.retrofit.RetrofitClient
  * Created by Rahul Sadhu
  */
 
-class AboutUsVM : com.app.rahul.baseclass.BaseViewModel() {
+class AboutUsVM : BaseViewModel() {
 
-    private val aboutUsModel = MutableLiveData<com.app.rahul.model.AboutUsModel>()
+    private val aboutUsModel = MutableLiveData<AboutUsModel>()
 
     fun callAboutUs() {
         setLoading(true)
         val call = RetrofitClient.getApiInterface().aboutUsService()
-        getNetworkManager().RequestData(call, ABOUT_US_URL)
+        getNetworkManager().requestData(call, ABOUT_US_URL)
     }
 
-    override fun responseData(responseData: com.app.rahul.model.ResponseData<*>?) {
-        super.responseData(responseData)
-        aboutUsModel.value = responseData?.data as com.app.rahul.model.AboutUsModel
+    override fun apiResponse(responseData: ResponseData<*>) {
+        super.apiResponse(responseData)
+        aboutUsModel.value = responseData.data as AboutUsModel
     }
 
-    fun getAboutUsModel(): LiveData<com.app.rahul.model.AboutUsModel> {
+
+    fun getAboutUsModel(): LiveData<AboutUsModel> {
         return this.aboutUsModel
     }
 

@@ -1,13 +1,15 @@
 package com.app.rahul.view
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import app.rahul.com.kotlinandroidarchitecturecomponent.R
 import app.rahul.com.kotlinandroidarchitecturecomponent.databinding.ActivityAboutBinding
+import com.app.rahul.baseclass.BaseActivity
 import com.app.rahul.utility.Utils
 import com.app.rahul.viewmodel.AboutUsVM
 
-class AboutActivity : com.app.rahul.baseclass.BaseActivity() {
+
+class AboutActivity : BaseActivity() {
 
     lateinit var aboutUsVM: AboutUsVM
     lateinit var mBinding: ActivityAboutBinding

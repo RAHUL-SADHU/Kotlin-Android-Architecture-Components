@@ -4,9 +4,13 @@ package com.app.rahul.utility
  * Created by Rahul Sadhu
  */
 
-object UtilConstants {
 
-    var X_API_KEY = "6a71894be3499989223cd421fe3f547260ab6425"
-    var FAILURE = 0
-    var SUCCESS = 1
-}
+const val FAILURE = 0
+const val SUCCESS = 1
+const val X_API_KEY = "abcdefghijklmnopqrsuvwxyz"
+
+const val SESSION_EXPIRE_MSG = "Session Expire Please Login Again !"
+const val NETWORK_ERROR = "Oops, the internet is not working. Please check the connection and try again."
+const val SERVER_ERROR = "Server Error !"
+
+
