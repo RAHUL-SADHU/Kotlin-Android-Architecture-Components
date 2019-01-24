@@ -51,7 +51,7 @@ class SplashActivity : com.app.rahul.baseclass.BaseActivity() {
     }
 
     private fun startLoginActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, AboutActivity::class.java)
         startNewActivity(intent)
     }
 

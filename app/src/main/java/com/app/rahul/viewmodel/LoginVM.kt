@@ -25,23 +25,12 @@ class LoginVM : BaseViewModel() {
 
 
     fun callSignIn(email: String, password: String, deviceId: String) {
-        setLoading(true)
         val call = RetrofitClient.getApiInterface().singInService(email, password, deviceId)
         getNetworkManager().requestData(call, SIGN_IN_URL)
     }
 
     fun getUserModel(): LiveData<UserModel> {
         return this.userModelLiveData
-    }
-
-    override fun apiResponse(responseData: ResponseData<*>) {
-        super.apiResponse(responseData)
-        if (responseData.key.equals(GENERATE_KEY_URL)) {
-            SharedPrefsManager.setString(KEY_X_API, responseData.data as String)
-        } else if (responseData.key.equals(SIGN_IN_URL)) {
-            SharedPrefsManager.setUserModel(responseData.data as UserModel)
-            userModelLiveData.value = responseData.data as UserModel
-        }
     }
 
 }

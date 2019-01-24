@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import app.rahul.com.kotlinandroidarchitecturecomponent.R
 import com.app.rahul.interfaces.BaseFragmentImplMethod
 import com.app.rahul.model.ResponseData
+import com.app.rahul.retrofit.Status
 import com.app.rahul.utility.FAILURE
 import com.app.rahul.utility.SESSION_EXPIRE_MSG
 import com.app.rahul.utility.SharedPrefsManager
@@ -74,20 +75,26 @@ abstract class BaseFragment : Fragment(), BaseFragmentImplMethod {
         return binding
     }
 
-    // set ViewModel when BaseViewModel use
+    /**
+     *  get ViewModel when extend BaseViewModel in your ViewModel
+     */
     inline fun <reified T : BaseViewModel> getViewModel(): BaseViewModel {
         baseViewModel = ViewModelProviders.of(this)[T::class.java]
         setObserve()
         return baseViewModel as T
     }
 
-    // set viewModel when BaseViewModel not use
+    /**
+     * set viewModel when not extend BaseViewModel in your viewModel
+     */
     inline fun <reified T : ViewModel> setViewModel(): ViewModel {
         viewModel = ViewModelProviders.of(this)[T::class.java]
         return viewModel
     }
 
-    // get Activity ViewModel
+    /**
+     *  get Activity ViewModel
+     */
     inline fun <reified T : BaseViewModel> getActivityViewModel(): BaseViewModel {
         baseViewModel = ViewModelProviders.of(requireActivity())[T::class.java]
         return baseViewModel as T
@@ -95,49 +102,61 @@ abstract class BaseFragment : Fragment(), BaseFragmentImplMethod {
 
 
     fun setObserve() {
-        baseViewModel.loading.observe(requireActivity(), Observer { loading ->
-            if (loading!!) showProgressDialog() else hideProgressDialog()
-        })
+        baseViewModel.getNetworkManager().apiResource.observe(this, Observer {
+            when (it.status) {
+                Status.LOADING -> {
+                    showProgressDialog()
+                }
 
+                Status.SUCCESS -> {
+                    hideProgressDialog()
+                    if (it.success == FAILURE) {
+                        apiResponseError(it)
+                    } else {
+                        apiResponse(it)
+                    }
+                }
 
-        baseViewModel.apiResponse.observe(requireActivity(), Observer {
-            hideProgressDialog()
-            if (it.status == FAILURE) {
-                apiResponseError(it)
-            } else {
-                apiResponse(it)
-            }
-
-        })
-
-        baseViewModel.apiError.observe(requireActivity(), Observer { error ->
-            baseViewModel.setLoading(false)
-            apiError(error)
-            if (!TextUtils.isEmpty(error) && isAdded) {
-                Utils.showToast(requireContext(), error)
-                if (error == SESSION_EXPIRE_MSG) {
-                    SharedPrefsManager.clearPrefs()
-                    val intent = Intent(context, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    Utils.startNewActivity(requireContext(), intent)
+                Status.ERROR -> {
+                    hideProgressDialog()
+                    val error = it.message.toString()
+                    apiError(error)
+                    if (!TextUtils.isEmpty(error) && isAdded) {
+                        Utils.showToast(requireContext(), error)
+                        if (error == SESSION_EXPIRE_MSG) {
+                            SharedPrefsManager.clearPrefs()
+                            val intent = Intent(context, LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            Utils.startNewActivity(requireContext(), intent)
+                        }
+                    }
                 }
             }
-
-
         })
 
     }
 
+
+    /**
+     *   this method call when status fail
+     *   like success = 0  or success = false in Response
+     */
     open fun apiResponseError(it: ResponseData<*>?) {
 
     }
 
+    /**
+     *  any error for call
+     */
     open fun apiError(error: String) {
-        // when error method use in Activity
+
     }
 
-    open fun apiResponse(response: ResponseData<*>) {
-        // when response call this method use in Activity
+    /**
+     *  get Response
+     */
+    open fun apiResponse(response: ResponseData<*>?) {
+
     }
 
     private fun showProgressDialog() {
