@@ -20,36 +20,44 @@ import java.net.UnknownHostException
  * Created by RahulSadhu.
  */
 class NetworkManager {
-    val apiError = MutableLiveData<String>()
-    val apiResponse: MutableLiveData<ResponseData<*>> = MutableLiveData()
-    private lateinit var call: Call<*>
+    //val apiError = MutableLiveData<String>()
+    //val apiResponse: MutableLiveData<ResponseData<*>> = MutableLiveData()
+    val apiResource = MutableLiveData<ResponseData<*>>()
     val gson = Gson()
 
-    fun <T> requestData(call: Call<T>, key: String) {
-        this.call = call
-        call.enqueue(object : Callback<T> {
-            override fun onResponse(call: Call<T>?, response: Response<T>?) {
+    fun <T> requestData(call: Call<ResponseData<T>>, key: String) {
+        apiResource.postValue(ResponseData.loading(null))
+        call.enqueue(object : Callback<ResponseData<T>> {
+
+
+            override fun onResponse(call: Call<ResponseData<T>>?, response: Response<ResponseData<T>>?) {
                 val data = response as Response<ResponseData<T>>
                 if (response.isSuccessful) {
                     data.body()?.key = key
-                    apiResponse.postValue(data.body())
+                    apiResource.postValue(ResponseData.success(response.body()))
+                    //apiResponse.postValue(data.body())
                 } else {
                     val errorData = gson.fromJson(response.errorBody()?.charStream(), ResponseData::class.java)
                     if (errorData != null) {
                         if (data.code() == 401) {
-                            apiError.postValue(SESSION_EXPIRE_MSG)
+                            // apiError.postValue(SESSION_EXPIRE_MSG)
+                            apiResource.postValue(ResponseData.error(SESSION_EXPIRE_MSG, null))
                         } else {
-                            call?.let { apiError.postValue(errorData.message) }
+                            call?.let {
+                                //   apiError.postValue(errorData.message)
+                                apiResource.postValue(ResponseData.error(errorData.message.toString(), null))
+                            }
                         }
 
                     } else {
-                        apiError.postValue(SERVER_ERROR)
+                        // apiError.postValue(SERVER_ERROR)
+                        apiResource.postValue(ResponseData.error(SERVER_ERROR, null))
                     }
                 }
 
             }
 
-            override fun onFailure(call: Call<T>, t: Throwable?) {
+            override fun onFailure(call: Call<ResponseData<T>>, t: Throwable?) {
                 Utils.log("onFailure ${t?.localizedMessage}")
                 if (call.isCanceled) {
                     Utils.log("request was cancelled")
@@ -62,7 +70,8 @@ class NetworkManager {
                         else -> SERVER_ERROR
                     }
 
-                    apiError.postValue(message)
+                    // apiError.postValue(message)
+                    apiResource.postValue(ResponseData.error(message, null))
                 }
 
 
@@ -70,9 +79,9 @@ class NetworkManager {
         })
     }
 
-    fun cancelCall() {
-        if (!call.isCanceled) {
-            call.cancel()
-        }
-    }
+    /* fun cancelCall() {
+         if (!call.isCanceled) {
+             call.cancel()
+         }
+     }*/
 }
