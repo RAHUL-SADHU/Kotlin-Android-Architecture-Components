@@ -20,8 +20,6 @@ import java.net.UnknownHostException
  * Created by RahulSadhu.
  */
 class NetworkManager {
-    //val apiError = MutableLiveData<String>()
-    //val apiResponse: MutableLiveData<ResponseData<*>> = MutableLiveData()
     val apiResource = MutableLiveData<ResponseData<*>>()
     val gson = Gson()
 
@@ -35,22 +33,18 @@ class NetworkManager {
                 if (response.isSuccessful) {
                     data.body()?.key = key
                     apiResource.postValue(ResponseData.success(response.body()))
-                    //apiResponse.postValue(data.body())
                 } else {
                     val errorData = gson.fromJson(response.errorBody()?.charStream(), ResponseData::class.java)
                     if (errorData != null) {
                         if (data.code() == 401) {
-                            // apiError.postValue(SESSION_EXPIRE_MSG)
                             apiResource.postValue(ResponseData.error(SESSION_EXPIRE_MSG, null))
                         } else {
                             call?.let {
-                                //   apiError.postValue(errorData.message)
                                 apiResource.postValue(ResponseData.error(errorData.message.toString(), null))
                             }
                         }
 
                     } else {
-                        // apiError.postValue(SERVER_ERROR)
                         apiResource.postValue(ResponseData.error(SERVER_ERROR, null))
                     }
                 }
@@ -69,8 +63,6 @@ class NetworkManager {
                         is SocketTimeoutException -> "Please try again later…"
                         else -> SERVER_ERROR
                     }
-
-                    // apiError.postValue(message)
                     apiResource.postValue(ResponseData.error(message, null))
                 }
 

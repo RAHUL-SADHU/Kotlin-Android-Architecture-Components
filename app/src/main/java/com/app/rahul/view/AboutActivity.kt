@@ -11,7 +11,7 @@ import com.app.rahul.viewmodel.AboutUsVM
 
 class AboutActivity : BaseActivity() {
 
-    lateinit var aboutUsVM: AboutUsVM
+    private lateinit var aboutUsVM: AboutUsVM
     lateinit var mBinding: ActivityAboutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

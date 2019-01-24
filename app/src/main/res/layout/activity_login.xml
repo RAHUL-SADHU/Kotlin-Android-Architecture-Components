@@ -50,7 +50,7 @@
                 android:hint="@string/password" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_signIn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
