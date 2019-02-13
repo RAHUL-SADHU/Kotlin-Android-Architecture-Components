@@ -10,4 +10,12 @@ In this project use MVVM structure and also use new android architecture compone
   - Manage Shared Preferences
   - convert AndroidX
   - build.gradle file add rename apk file function.
+  
+# update Retrofit structure
+  - Manage all state in xml layout file
+  - Loading, Error and Retry State manage using LiveData in xml Layout file.
+  
+  
+  
+  
 
