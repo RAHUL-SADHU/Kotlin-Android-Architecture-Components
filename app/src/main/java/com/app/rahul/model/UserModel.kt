@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 
 class UserModel {
 
-    @SerializedName("userid")
+    @SerializedName("id")
     @Expose
     var userid: String? = null
     @SerializedName("name")

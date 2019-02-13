@@ -25,7 +25,7 @@ object RetrofitClient {
                 .setLenient()
                 .create()
         httpClient.connectTimeout(25, TimeUnit.SECONDS)
-        httpClient.readTimeout(25, TimeUnit.SECONDS)
+        httpClient.readTimeout(1, TimeUnit.SECONDS)
         httpClient.retryOnConnectionFailure(true)
         addInterceptors()
         val retrofit = Retrofit.Builder()

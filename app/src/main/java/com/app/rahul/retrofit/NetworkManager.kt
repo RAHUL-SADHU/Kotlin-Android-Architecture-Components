@@ -3,10 +3,7 @@ package com.app.rahul.retrofit
 
 import androidx.lifecycle.MutableLiveData
 import com.app.rahul.model.ResponseData
-import com.app.rahul.utility.NETWORK_ERROR
-import com.app.rahul.utility.SERVER_ERROR
-import com.app.rahul.utility.SESSION_EXPIRE_MSG
-import com.app.rahul.utility.Utils
+import com.app.rahul.utility.*
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,36 +16,32 @@ import java.net.UnknownHostException
 /**
  * Created by RahulSadhu.
  */
-class NetworkManager {
-    val apiResource = MutableLiveData<ResponseData<*>>()
+object NetworkManager {
     val gson = Gson()
 
-    fun <T> requestData(call: Call<ResponseData<T>>, key: String) {
-        apiResource.postValue(ResponseData.loading(null))
+    fun <T> requestData(call: Call<ResponseData<T>>, key: String, responseData: MutableLiveData<ResponseData<T>>) {
+        responseData.postValue(ResponseData.loading(null))
         call.enqueue(object : Callback<ResponseData<T>> {
-
-
             override fun onResponse(call: Call<ResponseData<T>>?, response: Response<ResponseData<T>>?) {
                 val data = response as Response<ResponseData<T>>
                 if (response.isSuccessful) {
                     data.body()?.key = key
-                    apiResource.postValue(ResponseData.success(response.body()))
+                    responseData.postValue(ResponseData.success(response.body()))
                 } else {
-                    val errorData = gson.fromJson(response.errorBody()?.charStream(), ResponseData::class.java)
-                    if (errorData != null) {
+                    try {
+                        val errorData = gson.fromJson(response.errorBody()?.charStream(), ResponseData::class.java)
                         if (data.code() == 401) {
-                            apiResource.postValue(ResponseData.error(SESSION_EXPIRE_MSG, null))
+                            responseData.postValue(ResponseData.error(SESSION_EXPIRE_MSG, null))
                         } else {
                             call?.let {
-                                apiResource.postValue(ResponseData.error(errorData.message.toString(), null))
+                                responseData.postValue(ResponseData.error(errorData.message.toString(), null))
                             }
                         }
-
-                    } else {
-                        apiResource.postValue(ResponseData.error(SERVER_ERROR, null))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        responseData.postValue(ResponseData.error(SERVER_ERROR, null))
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<ResponseData<T>>, t: Throwable?) {
@@ -60,10 +53,10 @@ class NetworkManager {
                     val message: String = when (t) {
                         is ConnectException -> NETWORK_ERROR
                         is UnknownHostException -> NETWORK_ERROR
-                        is SocketTimeoutException -> "Please try again later…"
+                        is SocketTimeoutException -> PLEASE_TRY_AGAIN
                         else -> SERVER_ERROR
                     }
-                    apiResource.postValue(ResponseData.error(message, null))
+                    responseData.postValue(ResponseData.error(message, null))
                 }
 
 

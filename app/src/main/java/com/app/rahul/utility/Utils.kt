@@ -17,6 +17,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.create
 import app.rahul.com.kotlinandroidarchitecturecomponent.BuildConfig
 import app.rahul.com.kotlinandroidarchitecturecomponent.R
@@ -54,7 +56,7 @@ object Utils {
 
     fun log(string: String) {
         if (BuildConfig.DEBUG) {
-            android.util.Log.d("####", string)
+            android.util.Log.e("####", string)
         }
     }
 
@@ -113,21 +115,21 @@ object Utils {
     }
 
 
-    /* fun checkPlayServices(mContext: Context): Boolean {
-         val googleAPI = GoogleApiAvailability.getInstance()
-         val result = googleAPI.isGooglePlayServicesAvailable(mContext)
-         if (result != ConnectionResult.SUCCESS) {
-             //Google Play Services app is not available or version is not up to date. Error the
-             // error condition here
-             if (googleAPI.isUserResolvableError(result)) {
-                 googleAPI.getErrorDialog(mContext as Activity, result,
-                         6).show()
-             }
-             return false
-         }
-         //Google Play Services is available. Return true.
-         return true
-     }*/
+    /*fun checkPlayServices(mContext: Context): Boolean {
+        val googleAPI = GoogleApiAvailability.getInstance()
+        val result = googleAPI.isGooglePlayServicesAvailable(mContext)
+        if (result != ConnectionResult.SUCCESS) {
+            //Google Play Services app is not available or version is not up to date. Error the
+            // error condition here
+            if (googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(mContext as Activity, result,
+                        6).show()
+            }
+            return false
+        }
+        //Google Play Services is available. Return true.
+        return true
+    }*/
 
     fun convertCalenderToFormat(calendar: Calendar, format: String): String {
         val formatter = SimpleDateFormat(format, Locale.getDefault())
@@ -258,6 +260,4 @@ object Utils {
             context.getString(R.string.just_now)
         }
     }
-
-
 }

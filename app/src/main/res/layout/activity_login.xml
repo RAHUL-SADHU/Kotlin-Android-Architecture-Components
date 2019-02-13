@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="loginVM"
+            type="com.app.rahul.viewmodel.LoginVM" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,9 +58,9 @@
             android:id="@+id/btn_signIn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginEnd="@dimen/dp_24"
             android:onClick="clickBtnSignIn"
             android:text="@string/sign_in"
             app:layout_constraintEnd_toEndOf="parent"

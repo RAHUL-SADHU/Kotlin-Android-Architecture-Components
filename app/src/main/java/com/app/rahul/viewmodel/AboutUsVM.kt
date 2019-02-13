@@ -1,33 +1,31 @@
 package com.app.rahul.viewmodel
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import com.app.rahul.baseclass.BaseViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.app.rahul.listener.RetryCallback
 import com.app.rahul.model.AboutUsModel
+import com.app.rahul.model.ResponseData
 import com.app.rahul.retrofit.ABOUT_US_URL
+import com.app.rahul.retrofit.NetworkManager
 import com.app.rahul.retrofit.RetrofitClient
 
 /**
  * Created by Rahul Sadhu
  */
 
-class AboutUsVM : BaseViewModel() {
+class AboutUsVM : ViewModel() {
 
-    private lateinit var aboutUsModel: LiveData<AboutUsModel>
+    var responseData = MutableLiveData<ResponseData<AboutUsModel>>()
 
     fun callAboutUs() {
-
         val call = RetrofitClient.getApiInterface().aboutUsService()
-        getNetworkManager().requestData(call, ABOUT_US_URL)
+        NetworkManager.requestData(call, ABOUT_US_URL, responseData)
+    }
 
-        aboutUsModel = Transformations.map(getNetworkManager().apiResource) {
-            it.data as AboutUsModel?
-        }
+    fun retry() {
+        callAboutUs()
     }
 
 
-    fun getAboutUsModel(): LiveData<AboutUsModel> {
-        return this.aboutUsModel
-    }
 }

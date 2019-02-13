@@ -27,7 +27,7 @@ android {
         }
 
         debug {
-            buildConfigField "String", "SERVER_URL", "\"https://www.shareameals.com/ws/\""
+            buildConfigField "String", "SERVER_URL", "\"https://api.myjson.com/bins/\""
         }
     }
 
@@ -57,7 +57,7 @@ def renameArtifact(variant, defaultConfig) {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin_gradle_plugin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin_gradle_plugin"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
     implementation "androidx.appcompat:appcompat:$versions.appcompat"
     implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"

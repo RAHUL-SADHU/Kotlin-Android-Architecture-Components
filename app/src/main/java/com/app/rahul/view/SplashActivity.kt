@@ -31,7 +31,8 @@ class SplashActivity : com.app.rahul.baseclass.BaseActivity() {
             if (SharedPrefsManager.containsKey(KEY_USER_ID)) {
                 startHomeActivity()
             } else {
-                startLoginActivity()
+                startHomeActivity()
+                //startLoginActivity()
             }
         }
         myHandler?.postDelayed(myRunnable, 2000)
@@ -51,7 +52,7 @@ class SplashActivity : com.app.rahul.baseclass.BaseActivity() {
     }
 
     private fun startLoginActivity() {
-        val intent = Intent(this, AboutActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startNewActivity(intent)
     }
 

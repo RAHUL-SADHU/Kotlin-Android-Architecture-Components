@@ -13,8 +13,8 @@ object SharedPrefsManager {
     lateinit var prefs: SharedPreferences
 
 
-    fun initialize(appContext: Context?) {
-        prefs = appContext!!.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    fun initialize(appContext: Context) {
+        prefs = appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
     /**
      * Clears all data in SharedPreferences

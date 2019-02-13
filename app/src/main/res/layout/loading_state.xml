@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <import type="com.app.rahul.retrofit.Status" />
+
+        <variable
+            name="responseData"
+            type="com.app.rahul.model.ResponseData" />
+
+        <variable
+            name="callback"
+            type="com.app.rahul.listener.RetryCallback" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_16"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:visibleGone="@{responseData.data == null}">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            app:visibleGone="@{responseData.status == Status.LOADING}" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> callback.retry()}"
+            android:text="@string/retry"
+            app:visibleGone="@{responseData.status == Status.ERROR}" />
+
+        <TextView
+            android:id="@+id/error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{responseData.message ?? @string/unknown_error}"
+            app:visibleGone="@{responseData.status == Status.ERROR}"
+            tools:text="Error Message" />
+    </LinearLayout>
+</layout>
+

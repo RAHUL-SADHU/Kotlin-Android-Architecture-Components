@@ -7,6 +7,7 @@
     <string name="please_enter_password">Please enter password.</string>
     <string name="please_enter_minimum_password">Please enter minimum five characters.</string>
     <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown Error</string>
     <string name="just_now">Just now</string>
     <string name="seconds_ago">seconds ago</string>
     <string name="minutes_ago">minutes ago</string>
@@ -27,5 +28,6 @@
     <string name="an_hour_ago">An hour ago</string>
     <string name="one_minute_ago">"1 minute ago</string>
     <string name="a_minute_ago">A minute ago</string>
+    <string name="user_not_found">Users not found !</string>
 
 </resources>
